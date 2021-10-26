@@ -11,6 +11,9 @@
 
     <section class="p-6">
         <div class="max-w-3xl mx-auto">
+            <iframe class="mb-6" width="560" height="315" src="https://www.youtube.com/embed/Qd0486iVt8o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+
             <slot />
         </div>
     </section>
