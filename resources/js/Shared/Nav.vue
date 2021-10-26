@@ -2,21 +2,21 @@
     <nav class="mt-6">
         <ul class="list-disc">
             <li>
-                <Link href="/" class="text-blue-500 hover:underline">
+                <NavLink href="/" :active="$page.url === '/'">
                     Home
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link href="/users" class="text-blue-500 hover:underline">
+                <NavLink href="/users" :active="$page.component === 'Users'">
                     Users
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link href="/settings" class="text-blue-500 hover:underline">
+                <NavLink href="/settings" :active="$page.url.startsWith('/settings')">
                     Settings
-                </Link>
+                </NavLink>
             </li>
-            <li>
+<!--             <li>
                 <Link href="/logout"
                     method="POST"
                     as="button"
@@ -25,17 +25,17 @@
                 >
                     Log Out
                 </Link>
-            </li>
+            </li> -->
         </ul>
     </nav>
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue3';
+import NavLink from './NavLink';
 
 export default {
   components: {
-    Link
+    NavLink
   },
 }
 </script>
