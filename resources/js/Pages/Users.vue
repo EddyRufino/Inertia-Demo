@@ -4,6 +4,10 @@
         User
     </h1>
 
+    <ul>
+        <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+    </ul>
+
     <div style="margin-top: 800px">
         <p>La hora actual es {{ time }}.</p>
 
@@ -18,6 +22,7 @@
 export default {
     props: {
         time: String,
+        users: Array,
     }
 };
 </script>
