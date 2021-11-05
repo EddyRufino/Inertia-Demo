@@ -11,11 +11,19 @@ Route::get('/', function () {
 Route::get('users', function () {
     return Inertia::render('Users', [
         'time' => now()->toTimeString(),
-        'users' => User::all()->map(function($user) {
-            return [
-                'name' => $user->name
-            ];
-        }),
+        'users' => User::query()
+            ->when(Request::input('search'), function($query, $search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->paginate(4)
+            ->withQueryString()
+            ->through(function($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name
+                ];
+            }),
+        'filters' => Request::only(['search'])
     ]);
 });
 
