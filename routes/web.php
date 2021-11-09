@@ -8,8 +8,8 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-Route::get('users', function () {
-    return Inertia::render('Users', [
+Route::get('/users', function () {
+    return Inertia::render('Users/Index', [
         'time' => now()->toTimeString(),
         'users' => User::query()
             ->when(Request::input('search'), function($query, $search) {
@@ -27,10 +27,26 @@ Route::get('users', function () {
     ]);
 });
 
-Route::get('settings', function () {
+Route::get('/users/create', function () {
+    return Inertia::render('Users/Create');
+});
+
+Route::post('/users', function () {
+    User::create(
+        Request::validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ])
+    );
+
+    return redirect('/users');
+});
+
+Route::get('/settings', function () {
     return Inertia::render('Settings');
 });
 
-Route::post('logout', function () {
+Route::post('/logout', function () {
     dd(request('foo'));
 });
