@@ -16,6 +16,8 @@
                 id="name"
                 required
             />
+
+            <div v-if="form.errors.name" class="text-red-500 text-xs mt-1">{{ form.errors.name }}</div>
         </div>
 
         <div class="mb-6">
@@ -31,6 +33,8 @@
                 id="email"
                 required
             />
+
+            <div v-if="form.errors.email" class="text-red-500 text-xs mt-1">{{ form.errors.email }}</div>
         </div>
 
         <div class="mb-6">
@@ -46,11 +50,14 @@
                 id="password"
                 required
             />
+
+            <div v-if="form.errors.password" class="text-red-500 text-xs mt-1">{{ form.errors.password }}</div>
         </div>
 
         <div class="mb-6">
             <button type="submit"
                 class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
+                :disabled="form.processing"
             >
                 Guardar
             </button>
@@ -60,16 +67,15 @@
 </template>
 
 <script setup>
-    import { reactive } from 'vue'
-    import { Inertia } from '@inertiajs/inertia'
+    import { useForm } from '@inertiajs/inertia-vue3'
 
-    let form = reactive({
+    let form = useForm({
         name: '',
         email: '',
         password: ''
     })
 
     let submit = () => {
-        Inertia.post('/users', form)
+        form.post('/users')
     }
 </script>
