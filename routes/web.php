@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\User;
 
 Route::get('login', [LoginController::class, 'create'])->name('login');
 Route::post('login', [LoginController::class, 'store']);
@@ -27,16 +28,22 @@ Route::middleware('auth')->group(function () {
                 ->through(function($user) {
                     return [
                         'id' => $user->id,
-                        'name' => $user->name
+                        'name' => $user->name,
+                        'can' => [
+                            'edit' => Auth::user()->can('edit', $user)
+                        ]
                     ];
                 }),
-            'filters' => Request::only(['search'])
+            'filters' => Request::only(['search']),
+            'can' => [
+                'createUser' => Auth::user()->can('create', User::class)
+            ]
         ]);
     });
 
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
-    });
+    })->can('create', 'App\Models\User');
 
     Route::post('/users', function () {
         User::create(
